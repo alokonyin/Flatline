@@ -1,0 +1,41 @@
+# Render deployment config
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: flatline
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    plan: free
+    envVars:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: CRON_SECRET
+        sync: false
+      - key: NODE_ENV
+        value: production
+
+  # Cron job — runs every hour, calls /api/cron
+  # Replace YOUR_APP_URL with your actual Render URL after first deploy
+  - type: cron
+    name: flatline-cron
+    runtime: node
+    schedule: "0 * * * *"   # every hour
+    buildCommand: echo "no build needed"
+    startCommand: >
+      curl -s -X GET
+      https://YOUR_APP_URL.onrender.com/api/cron
+      -H "Authorization: Bearer $CRON_SECRET"
+    plan: free
+    envVars:
+      - key: CRON_SECRET
+        sync: false
