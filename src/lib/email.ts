@@ -3,7 +3,7 @@ import { Resend } from "resend";
 const resend = new Resend(process.env.RESEND_API_KEY);
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://flatline.so";
 const FROM = "Flatline <alerts@getflatline.com>";
-
+//just a test email to verify that the resend integration is working
 export async function sendFlatlineAlert({
   to,
   monitorName,
