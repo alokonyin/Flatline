@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Flatline — Know when your Zap stops running",
   description:
     "Flatline monitors your Zapier automations and alerts you the moment one goes silent. Dead man's switch for your workflows.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
